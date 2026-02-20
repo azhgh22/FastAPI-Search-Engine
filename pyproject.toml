@@ -1,0 +1,65 @@
+[project]
+name = "fastapi-search-engine"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Archil",email = "azhgh22@freeuni.edu.ge"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi (>=0.129.0,<0.130.0)",
+    "uvicorn[standard] (>=0.41.0,<0.42.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)",
+    "types-requests (>=2.32.4.20260107,<3.0.0.0)",
+    "apexdevkit (>=1.24.3,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "coverage (>=7.13.4,<8.0.0)",
+    "pytest-vcr (>=1.0.2,<2.0.0)",
+    "mypy (>=1.19.1,<2.0.0)",
+    "ruff (>=0.15.2,<0.16.0)"
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+
+[tool.poetry.group.lint.dependencies]
+mypy = "*"
+ruff = "*"
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+files = ["./"]
+strict = true
+
+[tool.ruff]
+target-version = "py312"
+
+lint.select = ["E", "F", "I"]
+lint.ignore = []
+lint.fixable = ["A", "B", "C", "D", "E", "F", "I"]
+lint.unfixable = []
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.coverage.run]
+branch = true
+source = []
+
+[tool.coverage.report]
+skip_empty = true
+skip_covered = true
+show_missing = true
