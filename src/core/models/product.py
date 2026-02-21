@@ -16,3 +16,6 @@ class Product:
 class ProductSearchRequest:
     name: str
     description: str
+    country: str
+    brand: str
+    price: str

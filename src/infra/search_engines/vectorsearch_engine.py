@@ -14,8 +14,8 @@ class VectorSearchEngine:
     def __init__(self, products_db: ProductsDBI) -> None:
         self.db = products_db
 
-        self.index_path = "data_files/products.index"
-        self.id_map_path = "data_files/id_map.json"
+        self.index_path = "data_files/vector_search_all_MiniLM_L6_v2/products.index"
+        self.id_map_path = "data_files/vector_search_all_MiniLM_L6_v2/id_map.json"
 
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -45,7 +45,14 @@ class VectorSearchEngine:
 
         # Build text representations
         texts = [
-            f"{p.name} {p.description} {p.brand}"
+            (
+                f"product name: {(p.name or '').lower()}. "
+                f"description: {(p.description or '').lower()}. "
+                f"brand: {(p.brand or '').lower()}. "
+                f"country: {(p.country or '').lower()}. "
+                f"price: {str(p.price).lower() if p.price is not None else ''}. "
+                f"in stock: {'yes' if p.inStock else 'no'}."
+            )
             for p in products
         ]
 
@@ -74,12 +81,12 @@ class VectorSearchEngine:
 
         print("Vector index built successfully.")
 
-    def search(self, query: ProductSearchRequest, max_results: int = 10) -> List[Product]:
+    def search(self, query: str, max_results: int = 10) -> List[Product]:
         if not self.index:
             return []
 
         # Combine name + description into one search text
-        search_text = f"{query.name} {query.description}".strip()
+        search_text = query.strip()
 
         if not search_text:
             return []

@@ -13,6 +13,9 @@ def get_search_service(request: Request) -> SearchServiceI:
 class SearchRequest(BaseModel):
     name: str
     description: str
+    country: str
+    brand: str
+    price: str
 
 
 @search_api.get("/", status_code=200)
@@ -23,7 +26,10 @@ def search():
 def search_post(request: Request, search_request: SearchRequest) -> List[Product]:
     service_request = ProductSearchRequest(
                             name=search_request.name,
-                            description=search_request.description
+                            description=search_request.description,
+                            country=search_request.country,
+                            brand=search_request.brand,
+                            price=search_request.price
                         )
     search_service = get_search_service(request)
     return search_service.search(service_request)    
