@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from dataclasses import dataclass
 from src.core.services.classes.search_service import SearchService
-from src.core.services.interfaces.search_engineI import SearchEngineI
 from src.core.services.interfaces.search_serviceI import SearchServiceI
 from src.infra.API.search import search_api
 from src.infra.file_readers.json_reader import JsonReader

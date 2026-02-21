@@ -5,7 +5,7 @@ from src.core.services.interfaces.file_readerI import FileReaderI
 # implements SearchEngineI with an in-memory list of products for testing purposes
 class InMemorySearchEngine:
     def __init__(self, file_reader: FileReaderI) -> None:
-        self.products = [Product(**data) for data in file_reader.read()]
+        pass
 
     def search(self, query: ProductSearchRequest, max_results: int = 10) -> List[Product]:
         return [Product(

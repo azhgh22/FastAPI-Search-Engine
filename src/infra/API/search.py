@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter
 from pydantic import BaseModel
-from src.core.models.product import Product, ProductSearchRequest
+from src.core.models.product import ProductSearchRequest, ProductSearchResponse
 from src.core.services.interfaces.search_serviceI import SearchServiceI
 from starlette.requests import Request
 
@@ -16,11 +16,11 @@ class SearchRequest(BaseModel):
 
 
 @search_api.get("/", status_code=200)
-def read_root():
+def search():
     return {"message": "Hello, FastAPI!"}
 
 @search_api.post("/", status_code=200)
-def read_root(request: Request, search_request: SearchRequest) -> List[Product]:
+def search_post(request: Request, search_request: SearchRequest) -> List[ProductSearchResponse]:
     service_request = ProductSearchRequest(
                             name=search_request.name,
                             description=search_request.description
