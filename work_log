@@ -1,0 +1,3 @@
+1. 20/02 19:00 : Did set up Env. Started builing FastAPI interface. Thinking about Project architecture, which enables me to change different parts of the program and test them easily.
+
+2. 20/02 21:00 : Built architecture of project, trying to follow SOLID principles to simplify my future work. after that, I will try different search engine methodologies and choose the best.
