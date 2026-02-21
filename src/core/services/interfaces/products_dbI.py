@@ -7,3 +7,11 @@ class ProductsDBI(Protocol):
 
     def get_all_products(self) -> List[Product]:
         pass
+
+    def get_products_by_filter(self, name: str, 
+                               country: str, 
+                               brand: str, 
+                               max_price: float, 
+                               min_price: float,
+                               max_samples: int) -> List[Product]:
+        pass

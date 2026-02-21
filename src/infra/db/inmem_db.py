@@ -39,3 +39,26 @@ class InMemoryDB:
 
     def get_all_products(self) -> List[Product]:
         return [p for p in self.products.values()]
+    
+    def get_products_by_filter(self, name: str, 
+                               country: str, 
+                               brand: str, 
+                               max_price: float, 
+                               min_price: float,
+                               max_samples: int) -> List[Product]:
+        filtered_products = []
+        for product in self.products.values():
+            if name and name != "" and name.lower() not in product.name.lower():
+                continue
+            if country and country != "" and country.lower() not in product.country.lower():
+                continue
+            if brand and brand != "" and brand.lower() not in product.brand.lower():
+                continue
+            if max_price is not None and product.price > max_price:
+                continue
+            if min_price is not None and product.price < min_price:
+                continue
+            filtered_products.append(product)
+            if len(filtered_products) >= max_samples:
+                break
+        return filtered_products

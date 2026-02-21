@@ -4,11 +4,17 @@ from src.core.services.interfaces.search_serviceI import SearchServiceI
 from src.infra.API.search import search_api
 from src.infra.db.inmem_db import InMemoryDB
 from src.infra.search_engines.vectorsearch_engine import VectorSearchEngine
+from src.infra.db.sqllite_db import SqlLiteDB
 
 def get_service_with_vector_engine() -> SearchServiceI:
     db = InMemoryDB(products_path="data_files/products.json")
     search_engine = VectorSearchEngine(products_db=db)
-    return SearchService(search_engine=search_engine)
+    return SearchService(search_engine=search_engine, db=db)
+
+def get_service_with_vector_engine_sqlite_db() -> SearchServiceI:
+    db = SqlLiteDB(db_path="data_files/products.db")
+    search_engine = VectorSearchEngine(products_db=db)
+    return SearchService(search_engine=search_engine, db=db)
 
 def set_up_routes(api: FastAPI) -> None:
     api.include_router(search_api, prefix="/search", tags=["Search"])
