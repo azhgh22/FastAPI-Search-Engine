@@ -4,3 +4,4 @@
 
 3. 21/02 18:00 : After learning Vector Search, add VectorSearchEngine. It uses pretrained all-MiniLM-L6-v2 model to transform text into embedings and search similar texts using similarity scores between vectors. Confused about: In what format should I pass user input to the model to generate embedings. currently I am encoding products in this format: f"{p.name} {p.description} {p.brand}"
 
+4. 21/02 20:00:  add Exact search API. filter by name, price, description. add sqllite db, instead of inmemory db.
