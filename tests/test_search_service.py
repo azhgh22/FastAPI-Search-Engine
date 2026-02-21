@@ -3,9 +3,10 @@ from src.core.services.classes.search_service import SearchService
 from src.core.models.product import Product
 from src.core.models.product import ProductSearchRequest
 import pytest
+from typing import List
 
 class MockSearchEngine:
-    def search(self, query: ProductSearchRequest, max_results: int = 10):
+    def search(self, query: str, max_results: int = 10) -> List[Product]:
         return [Product(
             id=i,
             name=f"Product {i}",
@@ -16,16 +17,51 @@ class MockSearchEngine:
             inStock=True
         )    
         for i in range(max_results)]
+    
+
+class MockProductsDB:
+    def get_product_by_id(self, product_id: str) -> Product | None:
+        return None
+
+    def get_all_products(self) -> List[Product]:
+        return []
+
+    def get_products_by_filter(self, name: str, 
+                               country: str, 
+                               brand: str, 
+                               max_price: float, 
+                               min_price: float,
+                               max_samples: int) -> List[Product]:
+        return [
+            Product(
+                id=0,
+                name=f"Product {0}",
+                description=f"Description for product {0}",
+                price=10,
+                brand="Brand X" if 0 % 3 == 0 else "Brand Y",
+                country="Country 1" if 0 % 4 == 0 else "Country 2",
+                inStock=True
+            )
+        ]
 
 class TestSearchService:
     @pytest.fixture
     def service(self) -> SearchServiceI:
-        return SearchService(search_engine=MockSearchEngine())
+        return SearchService(search_engine=MockSearchEngine(), db=MockProductsDB())
 
     def test_search_price_should_be_formatted_correctly(self, service: SearchServiceI):
-        query = ProductSearchRequest(name="Test", description="Test")
+        query = ProductSearchRequest()
         results = service.search(query)
         assert all(isinstance(result, Product) for result in results)
+        assert results[0].name == "Product 0"
+        assert results[0].description == "Description for product 0"
+        assert results[0].price == 10
+
+
+    def test_search_should_return_exact_match(self, service: SearchServiceI):
+        results = service.exact_filter(name="product 0", country="", brand="", max_price=100, min_price=0)
+        assert all(isinstance(result, Product) for result in results)
+        assert len(results) == 1
         assert results[0].name == "Product 0"
         assert results[0].description == "Description for product 0"
         assert results[0].price == 10

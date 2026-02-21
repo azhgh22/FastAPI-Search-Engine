@@ -8,9 +8,9 @@ import json
 class TestInMemoryDB:
     @pytest.fixture
     def service(self): # -> tuple[List[dict], Any]:
-        with open("src/infra/search_engines/products.json", "r", encoding="utf-8") as f:
+        with open("data_files/products.json", "r", encoding="utf-8") as f:
             data = json.load(f)
-        return InMemoryDB(products_path="src/infra/search_engines/products.json"), data
+        return InMemoryDB(products_path="data_files/products.json"), data
         
 
     def test_reads_correctly(self, service: tuple[ProductsDBI, Any]):

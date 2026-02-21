@@ -8,7 +8,7 @@ from src.infra.search_engines.vectorsearch_engine import VectorSearchEngine
 class TestVectorSearchEngine:
     @pytest.fixture
     def engine(self): # -> tuple[List[dict], Any]:
-        db = InMemoryDB(products_path="src/infra/search_engines/products.json")
+        db = InMemoryDB(products_path="data_files/products.json")
         return VectorSearchEngine(products_db=db)
 
     def test_env_works(self, engine: VectorSearchEngine) -> None:
