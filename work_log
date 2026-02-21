@@ -1,3 +1,5 @@
 1. 20/02 19:00 : Did set up Env. Started builing FastAPI interface. Thinking about Project architecture, which enables me to change different parts of the program and test them easily.
 
 2. 20/02 21:00 : Built architecture of project, trying to follow SOLID principles to simplify my future work. after that, I will try different search engine methodologies and choose the best.
+
+3. 21/02 18:00 : After learning Vector Search, add VectorSearchEngine. It uses pretrained all-MiniLM-L6-v2 model to transform text into embedings and search similar texts using similarity scores between vectors. Confused about: In what format should I pass user input to the model to generate embedings.

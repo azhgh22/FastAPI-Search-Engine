@@ -6,7 +6,7 @@ authors = [
     {name = "Archil",email = "azhgh22@freeuni.edu.ge"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<3.15"
 dependencies = [
     "fastapi (>=0.129.0,<0.130.0)",
     "uvicorn[standard] (>=0.41.0,<0.42.0)",
@@ -14,7 +14,9 @@ dependencies = [
     "requests (>=2.32.5,<3.0.0)",
     "python-dotenv (>=1.2.1,<2.0.0)",
     "types-requests (>=2.32.4.20260107,<3.0.0.0)",
-    "apexdevkit (>=1.24.3,<2.0.0)"
+    "apexdevkit (>=1.24.3,<2.0.0)",
+    "faiss-cpu (>=1.13.2,<2.0.0)",
+    "sentence-transformers (>=5.2.3,<6.0.0)"
 ]
 
 
@@ -39,7 +41,7 @@ mypy = "*"
 ruff = "*"
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.13"
 ignore_missing_imports = true
 files = ["./"]
 strict = true

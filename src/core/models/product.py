@@ -3,26 +3,16 @@ from dataclasses import dataclass
 
 @dataclass
 class Product:
-    id: str
+    id: int
     name: str
     description: str
     country: str
     brand: str
     inStock: bool
-    price: int
+    price: float
 
 
 @dataclass
 class ProductSearchRequest:
     name: str
     description: str
-
-@dataclass
-class ProductSearchResponse:
-    id: str
-    name: str
-    description: str
-    country: str
-    brand: str
-    inStock: bool
-    price: str
