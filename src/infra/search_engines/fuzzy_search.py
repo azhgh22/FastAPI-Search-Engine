@@ -45,10 +45,10 @@ class FuzzySearchEngine:
         matched_products = []
 
         for _, score, product_id in results:
-            if score >= 60:  # threshold (tune this)
-                product = self.db.get_product_by_id(product_id)
-                if product:
-                    matched_products.append(product)
+            print(f"Score: {score}, Product ID: {product_id}")
+            product = self.db.get_product_by_id(product_id)
+            if product:
+                matched_products.append(product)
 
             if len(matched_products) >= max_results:
                 break
