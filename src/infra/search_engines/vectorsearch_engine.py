@@ -34,6 +34,36 @@ class VectorSearchEngine:
 
         self.__load_and_build_index()
 
+    def _build_search_text(self, p: Product) -> str:
+        """
+        Create weighted searchable representation.
+        Name and brand are prioritized.
+        """
+        name = (p.name or "").lower().strip()
+        brand = (p.brand or "").lower().strip()
+        description = (p.description or "").lower().strip()
+        country = (p.country or "").lower().strip()
+        price = str(p.price).lower() if p.price is not None else ""
+        in_stock = "yes" if p.inStock else "no"
+
+
+        return str({
+            "name": name,
+            "brand": brand,
+            "name": name,
+            "brand": brand,
+            "description": description,
+            "country": country,
+            "country": country,
+            "price": price,
+            "price": price,
+            "price": price,
+            "in_stock": in_stock
+        })
+
+        # Name and brand appear twice to increase importance
+        # return f"{name} {name} {brand} {brand} {description} {country} {price} {price} {price} {in_stock}"
+
     def __load_and_build_index(self):
         products = self.db.get_all_products()
 
@@ -43,18 +73,7 @@ class VectorSearchEngine:
             self.id_map = []
             return
 
-        # Build text representations
-        texts = [
-            (
-                f"product name: {(p.name or '').lower()}. "
-                f"description: {(p.description or '').lower()}. "
-                f"brand: {(p.brand or '').lower()}. "
-                f"country: {(p.country or '').lower()}. "
-                f"price: {str(p.price).lower() if p.price is not None else ''}. "
-                f"in stock: {'yes' if p.inStock else 'no'}."
-            )
-            for p in products
-        ]
+        texts = [self._build_search_text(p) for p in products]
 
         # Generate embeddings
         embeddings = self.model.encode(texts, show_progress_bar=True)

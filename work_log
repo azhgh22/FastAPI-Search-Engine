@@ -7,4 +7,7 @@
 4. 21/02 20:00:  add Exact search API. filter by name, price, description. add sqllite db, instead of inmemory db. Comfused About:
     Vector search model I implemented, underlines semantics like material and type of product more, and has payed negligible attention to semantics like country it was produced in.
 
-5. 22/02 19:00: Did fuzzy search, after learning this search algorythm. Also added mixture of different types of fuzzy search algorythms. Thinking about implementing asembly algorythm of fuzzy and vector searches. 
+5. 22/02 19:00 : Did fuzzy search, after learning this search algorythm. Also added mixture of different types of fuzzy search algorythms. Thinking about implementing asembly algorythm of fuzzy and vector searches. 
+
+
+6. 22/02 20:00 : Changed input format, how vector search creates embedings. While Analizing products data. Model remembers dict of fields, each field is duplicated according to field's importance.

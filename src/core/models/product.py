@@ -11,6 +11,15 @@ class Product:
     inStock: bool
     price: float
 
+    #define equality based on id only
+    def __eq__(self, other):
+        if isinstance(other, Product):
+            return self.id == other.id
+        return False
+    
+    def __hash__(self):
+        return hash(self.id)
+
 
 @dataclass
 class ProductSearchRequest:
