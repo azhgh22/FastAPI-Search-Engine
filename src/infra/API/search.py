@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter
 from pydantic import BaseModel
-from src.core.models.product import Product, ProductSearchRequest
+from src.core.models.product import FuzzyProductRequest, Product, ProductSearchRequest
 from src.core.services.interfaces.search_serviceI import SearchServiceI
 from starlette.requests import Request
 
@@ -52,3 +52,20 @@ def exact_match(request: Request, search_request: FilterRequest) -> List[Product
         max_price=search_request.max_price,
         min_price=search_request.min_price
     )
+
+class FuzzySearchRequest(BaseModel):
+    name: str
+    description: str
+    country: str
+    brand: str
+
+@search_api.post("/fuzzysearch", status_code=200)
+def fuzzy_search(request: Request, search_request: FuzzySearchRequest) -> List[Product]:
+    service_request = FuzzyProductRequest(
+                            name=search_request.name,
+                            description=search_request.description,
+                            country=search_request.country,
+                            brand=search_request.brand,
+                        )
+    search_service = get_search_service(request)
+    return search_service.fuzzy_search(service_request)

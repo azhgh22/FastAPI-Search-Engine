@@ -16,7 +16,8 @@ dependencies = [
     "types-requests (>=2.32.4.20260107,<3.0.0.0)",
     "apexdevkit (>=1.24.3,<2.0.0)",
     "faiss-cpu (>=1.13.2,<2.0.0)",
-    "sentence-transformers (>=5.2.3,<6.0.0)"
+    "sentence-transformers (>=5.2.3,<6.0.0)",
+    "rapidfuzz (>=3.14.3,<4.0.0)"
 ]
 
 

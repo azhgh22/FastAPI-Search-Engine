@@ -62,7 +62,7 @@ class SqlLiteDB:
         cursor.executemany(stmt, rows)
         conn.commit()
 
-    def get_product_by_id(self, product_id: str) -> Product | None:
+    def get_product_by_id(self, product_id: int) -> Product | None:
         cursor = self.conn.cursor()
         cursor.execute("SELECT * FROM products WHERE id = ?", (product_id,))
         row = cursor.fetchone()

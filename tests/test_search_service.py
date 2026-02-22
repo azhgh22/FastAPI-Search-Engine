@@ -20,7 +20,7 @@ class MockSearchEngine:
     
 
 class MockProductsDB:
-    def get_product_by_id(self, product_id: str) -> Product | None:
+    def get_product_by_id(self, product_id: int) -> Product | None:
         return None
 
     def get_all_products(self) -> List[Product]:
@@ -44,10 +44,15 @@ class MockProductsDB:
             )
         ]
 
+class MockEngineChooser:
+    def choose_engine(self, engine_type):
+        return MockSearchEngine()
+
 class TestSearchService:
     @pytest.fixture
     def service(self) -> SearchServiceI:
-        return SearchService(search_engine=MockSearchEngine(), db=MockProductsDB())
+        engine_chooser = MockEngineChooser()        
+        return SearchService(engine_chooser=engine_chooser, db=MockProductsDB())
 
     def test_search_price_should_be_formatted_correctly(self, service: SearchServiceI):
         query = ProductSearchRequest()

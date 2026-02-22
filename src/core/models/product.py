@@ -19,3 +19,12 @@ class ProductSearchRequest:
     country: str = ""
     brand: str = ""
     price: str = ""
+
+
+
+@dataclass
+class FuzzyProductRequest:
+    name: str = ""
+    description: str = ""
+    country: str = ""
+    brand: str = ""

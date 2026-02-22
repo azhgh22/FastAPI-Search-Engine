@@ -17,8 +17,8 @@ class InMemoryDB:
 
         return data
 
-    def __insert_products(self, products_dict: List[Dict]) -> dict[str, Product]:
-        products: dict[str, Product] = {}
+    def __insert_products(self, products_dict: List[Dict]) -> dict[int, Product]:
+        products: dict[int, Product] = {}
 
         for p in products_dict:
             products[p["id"]] = Product(
@@ -33,7 +33,7 @@ class InMemoryDB:
 
         return products
 
-    def get_product_by_id(self, product_id: str) -> Product | None:
+    def get_product_by_id(self, product_id: int) -> Product | None:
         return self.products.get(product_id)
         
 

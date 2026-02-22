@@ -1,13 +1,14 @@
 from typing import List
 
-from src.core.models.product import Product, ProductSearchRequest
+from src.core.models.product import FuzzyProductRequest, Product, ProductSearchRequest
+from src.core.services.interfaces.engine_chooserI import EngineChooserI, EngineType
 from src.core.services.interfaces.products_dbI import ProductsDBI
 from src.core.services.interfaces.search_engineI import SearchEngineI
 
 
 class SearchService:
-    def __init__(self, search_engine: SearchEngineI,db:ProductsDBI):
-        self.search_engine = search_engine
+    def __init__(self, engine_chooser: EngineChooserI,db:ProductsDBI):
+        self.engine_chooser = engine_chooser
         self.db = db
 
     def search(self, query: ProductSearchRequest) -> List[Product]:
@@ -26,8 +27,8 @@ class SearchService:
         
         print(f"SearchService: Searching for query: {query_text}")
 
-
-        results = self.search_engine.search(query_text)
+        engine = self.engine_chooser.choose_engine(EngineType.VECTOR)
+        results = engine.search(query_text)
         return results
     
     def exact_filter(self, name: str, 
@@ -38,4 +39,16 @@ class SearchService:
         
 
         return self.db.get_products_by_filter(name, country, brand, max_price, min_price,10)
+    
+
+    def fuzzy_search(self, query: FuzzyProductRequest) -> List[Product]:
+        name = (query.name or "").lower().strip()
+        brand = (query.brand or "").lower().strip()
+        description = (query.description or "").lower().strip()
+        country = (query.country or "").lower().strip()
+
+        query_text = f"{name} {brand} {description} {country}"
+
+        engine = self.engine_chooser.choose_engine(EngineType.FUZZY)
+        return engine.search(query_text)
     

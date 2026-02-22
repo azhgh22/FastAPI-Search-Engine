@@ -1,6 +1,6 @@
 from typing import List, Protocol
 
-from src.core.models.product import Product, ProductSearchRequest
+from src.core.models.product import Product, ProductSearchRequest, FuzzyProductRequest
 
 
 class SearchServiceI(Protocol):
@@ -12,4 +12,7 @@ class SearchServiceI(Protocol):
                      brand: str, 
                      max_price: float, 
                      min_price: float) -> List[Product]:
+        pass
+
+    def fuzzy_search(self, query: FuzzyProductRequest) -> List[Product]:
         pass
