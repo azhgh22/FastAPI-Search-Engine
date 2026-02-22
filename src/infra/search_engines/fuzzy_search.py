@@ -29,28 +29,61 @@ class FuzzySearchEngine:
         # Name and brand appear twice to increase importance
         return f"{name} {name} {brand} {brand} {description} {country}"
 
+
+    def fuzzy_intersection_with_fallback(self, query: str, max_results=10) -> List[int]:
+        # Run both methods
+        results_set = process.extract(
+            query,
+            self.search_choices,
+            scorer=fuzz.token_set_ratio,
+            limit=max_results * 3
+        )
+
+        results_partial = process.extract(
+            query,
+            self.search_choices,
+            scorer=fuzz.partial_token_sort_ratio,
+            limit=max_results * 3
+        )
+
+        # Convert to dict: id -> score
+        set_dict = {match[2]: match[1] for match in results_set}
+        partial_dict = {match[2]: match[1] for match in results_partial}
+
+        # Intersection
+        intersection_ids = set(set_dict.keys()) & set(partial_dict.keys())
+
+        final_results = []
+
+        for product_id in intersection_ids:
+            final_results.append(product_id)
+
+        if len(final_results) < max_results:
+            for _, _, product_id in results_partial:
+                if product_id not in final_results:
+                    final_results.append(product_id)
+
+                if len(final_results) >= max_results:
+                    break
+
+        return final_results[:max_results]
+
+
     def search(self, query: str, max_results: int = 10) -> List[Product]:
         if not query:
             return []
 
         query = query.lower()
 
-        results = process.extract(
-            query,
-            self.search_choices,
-            scorer=fuzz.token_set_ratio,
-            limit=max_results,  # get more candidates
-        )
+        results = self.fuzzy_intersection_with_fallback(query, max_results)
 
         matched_products = []
 
-        for _, score, product_id in results:
-            print(f"Score: {score}, Product ID: {product_id}")
+        for product_id in results:
             product = self.db.get_product_by_id(product_id)
             if product:
                 matched_products.append(product)
 
-            if len(matched_products) >= max_results:
-                break
+            
 
         return matched_products
