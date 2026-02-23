@@ -198,6 +198,13 @@ Additional notes
 		structured filters in SQL first, then run vector/fuzzy retrieval on the
 		filtered set; (2) Or, Use stronger embeding model, to gice much more importance to numberic values. Or imrove imput format, that enables model to pay attention to semantics that are not important for current model.
 
+**Planned architecture improvements**
+
+**Planned architecture improvements**
+
+I would also improve overall project architecture. For example Api of search engines. To be more signle responsibled and more general for much easier changes.
+
+
 
 
 
