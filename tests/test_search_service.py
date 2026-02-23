@@ -1,9 +1,12 @@
+from src.core.services.interfaces.engine_chooserI import EngineType
+from src.core.services.interfaces.products_dbI import ProductsDBI
+from src.core.services.interfaces.search_engineI import SearchEngineI
 from src.core.services.interfaces.search_serviceI import SearchServiceI
 from src.core.services.classes.search_service import SearchService
 from src.core.models.product import Product
 from src.core.models.product import ProductSearchRequest
 import pytest
-from typing import List
+from typing import Any, List
 
 class MockSearchEngine:
     def search(self, query: str, max_results: int = 10) -> List[Product]:
@@ -17,6 +20,13 @@ class MockSearchEngine:
             inStock=True
         )    
         for i in range(max_results)]
+    
+    def __call__(self, products_db: ProductsDBI) -> SearchEngineI:
+        """
+        Initialize the search engine with the given products database.
+        This allows the search engine to access product data for searching.
+        """
+        pass
     
 
 class MockProductsDB:
@@ -45,7 +55,7 @@ class MockProductsDB:
         ]
 
 class MockEngineChooser:
-    def choose_engine(self, engine_type):
+    def choose_engine(self, engine_type: EngineType) -> SearchEngineI:
         return MockSearchEngine()
 
 class TestSearchService:
@@ -56,7 +66,7 @@ class TestSearchService:
 
     def test_search_price_should_be_formatted_correctly(self, service: SearchServiceI):
         query = ProductSearchRequest()
-        results = service.search(query)
+        results = service.vector_search(query)
         assert all(isinstance(result, Product) for result in results)
         assert results[0].name == "Product 0"
         assert results[0].description == "Description for product 0"

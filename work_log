@@ -11,3 +11,10 @@
 
 
 6. 22/02 20:00 : Changed input format, how vector search creates embedings. While Analizing products data. Model remembers dict of fields, each field is duplicated according to field's importance.
+
+7. 23/02 18:00 : Implemented assembly algorythm of fuzzy and vector searches. It takes intersection of results of both search algorythms, and if intersection is too small, it fills it with results of one of the algorythms. I am not sure which one is better to fill the results with, so I will try both and compare them.
+                 Confused about: Often Intersection of results of vector and fuzzy searches is very small, which means that these algorythms are paying attention to different semantics. So, I am going to try other implementation:
+                 I am goint to implement hybrid search in a style of chain of responsibility pattern. I will first do vector search on 3*demaned_count, after that I will run fuzzy search on returned results of previous search algorythm.
+                 In this way, I think I will take advantages of both algorythms.
+            
+8. 23/02 20:00 : Implemented hybrid search in a style of chain of responsibility pattern. It first does vector search on 3*demaned_count, after that it runs fuzzy search on returned results of previous search algorythm.

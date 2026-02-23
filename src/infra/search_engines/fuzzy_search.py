@@ -16,6 +16,9 @@ class FuzzySearchEngine:
             for p in self.products
         }
 
+    def __call__(self, products_db: ProductsDBI) -> 'FuzzySearchEngine':
+        return FuzzySearchEngine(products_db)
+
     def _build_search_text(self, p: Product) -> str:
         """
         Create weighted searchable representation.
@@ -52,6 +55,7 @@ class FuzzySearchEngine:
 
         # Intersection
         intersection_ids = set(set_dict.keys()) & set(partial_dict.keys())
+        print("FuzzySearchEngine: Intersection count:", len(intersection_ids))
 
         final_results = []
 

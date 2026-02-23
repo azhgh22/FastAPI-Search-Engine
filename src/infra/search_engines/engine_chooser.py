@@ -7,7 +7,7 @@ class EngineChooser:
     def __init__(self, fuzzy_engine: FuzzySearchEngine, vector_engine: VectorSearchEngine):
         self.engine_dict = {
             EngineType.FUZZY: fuzzy_engine,
-            EngineType.VECTOR: vector_engine
+            EngineType.VECTOR: vector_engine,
         }
 
     def choose_engine(self, engine_type: EngineType) -> SearchEngineI:

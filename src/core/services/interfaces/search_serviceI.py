@@ -4,7 +4,7 @@ from src.core.models.product import Product, ProductSearchRequest, FuzzyProductR
 
 
 class SearchServiceI(Protocol):
-    def search(self, query: ProductSearchRequest) -> List[Product]:
+    def vector_search(self, query: ProductSearchRequest,count:int=10) -> List[Product]:
         pass
 
     def exact_filter(self, name: str, 
@@ -14,5 +14,8 @@ class SearchServiceI(Protocol):
                      min_price: float) -> List[Product]:
         pass
 
-    def fuzzy_search(self, query: FuzzyProductRequest) -> List[Product]:
+    def fuzzy_search(self, query: FuzzyProductRequest,count:int=10) -> List[Product]:
+        pass
+
+    def hybrid_search(self, query: ProductSearchRequest,count:int=10) -> List[Product]:
         pass

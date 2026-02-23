@@ -3,9 +3,12 @@ from typing import List, Dict
 from src.core.models.product import Product
 
 class InMemoryDB:
-    def __init__(self, products_path:str):
-        self.products_path = products_path
-        self._initialize_db()
+    def __init__(self, products_path:str, products: List[Product]|None = None) -> None:
+        if products is not None:
+            self.products = {p.id: p for p in products}
+        else:
+            self.products_path = products_path
+            self._initialize_db()
 
     def _initialize_db(self):
         product_dict = self.__load_products_from_json()

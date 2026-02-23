@@ -32,7 +32,7 @@ def search_post(request: Request, search_request: SearchRequest) -> List[Product
                             price=search_request.price
                         )
     search_service = get_search_service(request)
-    return search_service.search(service_request)
+    return search_service.vector_search(service_request)
 
 
 class FilterRequest(BaseModel):
@@ -69,3 +69,15 @@ def fuzzy_search(request: Request, search_request: FuzzySearchRequest) -> List[P
                         )
     search_service = get_search_service(request)
     return search_service.fuzzy_search(service_request)
+
+@search_api.post("/hybridsearch", status_code=200)
+def hybrid_search(request: Request, search_request: SearchRequest) -> List[Product]:
+    service_request = ProductSearchRequest(
+                            name=search_request.name,
+                            description=search_request.description,
+                            country=search_request.country,
+                            brand=search_request.brand,
+                            price=search_request.price
+                        )
+    search_service = get_search_service(request)
+    return search_service.hybrid_search(service_request)
