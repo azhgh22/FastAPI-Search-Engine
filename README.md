@@ -53,23 +53,22 @@ and simple in-memory and SQLite-backed data access interfaces.
 
 	 - Install poetry (if you don't have it):
 
-		 ```bash
+		 
 		 pip install --user poetry
-		 ```
+		 
 
          git clone https://github.com/azhgh22/FastAPI-Search-Engine.git
 		 cd FastAPI-Search-Engine
-		 ```
+		
 
 	 - Install dependencies:
 
-		 ```bash
+		 	poetry env use python3.13
 		 	poetry config virtualenvs.in-project true
 			poetry install --no-root
-		 ```
+		 
 	 - Run the app:
 
-		 ```bash
 		 poetry run python -m src.runner.main
 
 3.   - After starting server visit:
