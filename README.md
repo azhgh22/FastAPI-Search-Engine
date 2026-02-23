@@ -58,19 +58,21 @@ and simple in-memory and SQLite-backed data access interfaces.
 		 ```
 
          git clone https://github.com/azhgh22/FastAPI-Search-Engine.git
+		 cd FastAPI-Search-Engine
 		 ```
 
 	 - Install dependencies:
 
 		 ```bash
+			poetry install --no-root
+		 ```
 	 - Run the app:
 
 		 ```bash
 		 poetry run python -m src.runner.main
 
 3.   - After starting server visit:
-        ```bash
-        ```
+        http://127.0.0.1:8000/docs
 
 **API endpoints & example queries**
 The router is mounted at `/search` and exposes these endpoints:
