@@ -64,6 +64,7 @@ and simple in-memory and SQLite-backed data access interfaces.
 	 - Install dependencies:
 
 		 ```bash
+		 	poetry config virtualenvs.in-project true
 			poetry install --no-root
 		 ```
 	 - Run the app:
